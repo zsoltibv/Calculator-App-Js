@@ -6,7 +6,7 @@ const clearButton = document.querySelector("[data-clear]");
 const currentClearButton = document.querySelector("[data-current-clear]");
 const resultPanel = document.getElementById("result");
 const historyPanel = document.getElementById("history");
-let possibleOperands = ["+", "-"];
+let possibleOperands = ["+", "-", "*", "/"];
 let previousOperation = 0;
 
 numberButtons.forEach((button) => {
@@ -37,15 +37,7 @@ equalButton.addEventListener("click", () => {
   console.log(operands);
   console.log(numbers);
 
-  let sum = parseInt(numbers[0]);
-  for (i = 1; i < numbers.length; i++) {
-    if (operands[i - 1] === "+") {
-      sum += parseInt(numbers[i]);
-    } else if (operands[i - 1] === "-") {
-      sum -= parseInt(numbers[i]);
-    }
-  }
-  setResult(sum);
+  setResult(calculateResult(numbers, operands));
 });
 
 stepBackButton.addEventListener("click", () => {
@@ -73,4 +65,20 @@ function findOperands(expression) {
     }
   }
   return operands;
+}
+
+function calculateResult(numbers, operands) {
+  let sum = parseFloat(numbers[0]);
+  for (i = 1; i < numbers.length; i++) {
+    if (operands[i - 1] === "+") {
+      sum += parseFloat(numbers[i]);
+    } else if (operands[i - 1] === "-") {
+      sum -= parseFloat(numbers[i]);
+    }else if (operands[i - 1] === "/"){
+      sum /= parseFloat(numbers[i]);
+    }else if (operands[i - 1] === "*"){
+      sum *= parseFloat(numbers[i]);
+    }
+  }
+  return sum;
 }
