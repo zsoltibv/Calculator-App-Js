@@ -15,19 +15,28 @@ body{
     background-color: $calc-background-color;
     border-radius: 5px;
     padding: 20px;
-    #result-panel{
+    .result-panel{
+        position: relative;
         font-weight: 500;
         display: flex;
-        flex-wrap: nowrap;
         align-items: center;
         justify-content: right;
         padding-right: 15px;
-        min-height: 100px;
+        min-height: 130px;
         border: 1px solid $data-number;
         border-radius: 5px;
         margin-bottom: 10px;
         color: white;
         font-size: 2rem;
+        #history{
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-weight: 300;
+            font-size: 1rem;
+            padding: 0.8rem;
+            color: rgb(180, 180, 180);
+        }
     }
     .grid-container{
         display: grid;
