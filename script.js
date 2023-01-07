@@ -6,24 +6,32 @@ const clearButton = document.querySelector("[data-clear]");
 const currentClearButton = document.querySelector("[data-current-clear]");
 const resultPanel = document.getElementById("result");
 const historyPanel = document.getElementById("history");
-let possibleOperands = ["+", "-", "*", "/"];
+let possibleOperands = ["+", "-", "x", "/", "%"];
 let previousOperation = 0;
 
 numberButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    if(previousOperation == 1){
-      resultPanel.innerHTML = "";
+    if (resultPanel.innerHTML == "0") {
+      resultPanel.innerHTML = button.innerHTML;
+    } else {
+      if (previousOperation == 1) {
+        resultPanel.innerHTML = "";
+      }
+      resultPanel.innerHTML += button.innerHTML;
+      previousOperation = 0;
     }
-    resultPanel.innerHTML += button.innerHTML;
-    previousOperation = 0;
   });
 });
 
 operationButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    historyPanel.innerHTML += resultPanel.innerHTML;
-    historyPanel.innerHTML += button.innerHTML;
-    previousOperation = 1;
+    if (resultPanel.innerHTML == "0") {
+      resultPanel.innerHTML += button.innerHTML;
+    } else {
+      historyPanel.innerHTML += resultPanel.innerHTML;
+      historyPanel.innerHTML += button.innerHTML;
+      previousOperation = 1;
+    }
   });
 });
 
@@ -32,7 +40,7 @@ equalButton.addEventListener("click", () => {
   historyPanel.innerHTML += "=";
   let expression = historyPanel.innerHTML;
   let operands = findOperands(expression);
-  let numbers = expression.split(/\+|\*|\-|\//);
+  let numbers = expression.split(/\+|\%|\x|\-|\//);
 
   console.log(operands);
   console.log(numbers);
@@ -45,12 +53,12 @@ stepBackButton.addEventListener("click", () => {
 });
 
 clearButton.addEventListener("click", () => {
-  resultPanel.innerHTML = "";
+  resultPanel.innerHTML = "0";
   historyPanel.innerHTML = "";
 });
 
 currentClearButton.addEventListener("click", () => {
-  resultPanel.innerHTML = "";
+  resultPanel.innerHTML = "0";
 });
 
 function setResult(result) {
@@ -58,7 +66,7 @@ function setResult(result) {
 }
 
 function findOperands(expression) {
-  let operands = [];
+  let operands = ["+"];
   for (const char in expression) {
     if (possibleOperands.includes(expression[char])) {
       operands.push(expression[char]);
@@ -68,16 +76,19 @@ function findOperands(expression) {
 }
 
 function calculateResult(numbers, operands) {
-  let sum = parseFloat(numbers[0]);
-  for (i = 1; i < numbers.length; i++) {
-    if (operands[i - 1] === "+") {
+  let sum = 0;
+  for (i = 0; i < numbers.length; i++) {
+    if (operands[i] === "+") {
       sum += parseFloat(numbers[i]);
-    } else if (operands[i - 1] === "-") {
+    } else if (operands[i] === "-") {
       sum -= parseFloat(numbers[i]);
-    }else if (operands[i - 1] === "/"){
+    } else if (operands[i] === "/") {
       sum /= parseFloat(numbers[i]);
-    }else if (operands[i - 1] === "*"){
+    } else if (operands[i] === "x") {
       sum *= parseFloat(numbers[i]);
+    } else if (operands[i] === "%") {
+      sum %= parseFloat(numbers[i]);
+      console.log(sum);
     }
   }
   return sum;
