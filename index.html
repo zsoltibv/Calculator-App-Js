@@ -6,41 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="./css/style.css" />
-    <script src="./script.js"></script>
   </head>
   <body>
     <div class="container">
       <div class="inner-container">
-        <div class="result-panel">
-            <p>Result</p>
-        </div>
+        <div id="result-panel"></div>
         <div class="grid-container">
-          <div class="button">proc</div>
-          <div class="button">ce</div>
-          <div class="button">c</div>
-          <div class="button">del</div>
-          <div class="button">1/x</div>
-          <div class="button">x^2</div>
-          <div class="button">rad 2</div>
-          <div class="button">divide</div>
+          <div class="button" data-operation>proc</div>
+          <div class="button" data-operation>ce</div>
+          <div class="button" data-operation>c</div>
+          <div class="button" data-delete>del</div>
+          <div class="button" data-operation>1/x</div>
+          <div class="button" data-operation>x^2</div>
+          <div class="button" data-operation>rad 2</div>
+          <div class="button" data-operation>divide</div>
           <div class="button" data-number>7</div>
           <div class="button" data-number>8</div>
           <div class="button" data-number>9</div>
-          <div class="button">X</div>
+          <div class="button" data-operation>X</div>
           <div class="button" data-number>4</div>
           <div class="button" data-number>5</div>
           <div class="button" data-number>6</div>
-          <div class="button">-</div>
+          <div class="button" data-operation>-</div>
           <div class="button" data-number>1</div>
           <div class="button" data-number>2</div>
           <div class="button" data-number>3</div>
-          <div class="button">+</div>
-          <div class="button">+/-</div>
+          <div class="button" data-operation>+</div>
+          <div class="button" data-operation>+/-</div>
           <div class="button" data-number>0</div>
-          <div class="button">.</div>
-          <div class="button">=</div>
+          <div class="button" data-operation>,</div>
+          <div class="button" data-equals>=</div>
         </div>
       </div>
     </div>
+    <script src="./script.js"></script>
   </body>
 </html>

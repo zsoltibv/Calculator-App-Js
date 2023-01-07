@@ -1,29 +1,38 @@
+body{
+    margin: 0;
+}
+
 .container{
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-color: $background-color;
 }
 
 .inner-container{
     font-family: $base-font;
-    border: 1px solid $gray;
-    border-radius: 3px;
+    background-color: $calc-background-color;
+    border-radius: 5px;
     padding: 20px;
-    .result-panel{
+    #result-panel{
         font-weight: 500;
         display: flex;
-        flex-wrap: wrap;
-        align-content: center;
-        justify-content: center;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: right;
+        padding-right: 15px;
         min-height: 100px;
-        border: 1px solid $gray;
+        border: 1px solid $data-number;
+        border-radius: 5px;
         margin-bottom: 10px;
+        color: white;
+        font-size: 2rem;
     }
     .grid-container{
         display: grid;
-        grid-template-columns: repeat(4, 100px);
-        grid-template-rows: repeat(6, 100px);
+        grid-template-columns: repeat(4, 80px);
+        grid-template-rows: repeat(6, 60px);
         row-gap: 5px;
         column-gap: 5px;
     }

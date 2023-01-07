@@ -3,8 +3,11 @@
 
 //global variables
 $base-font: 'Inter', sans-serif;
-$blue: blue;
-$gray: gray;
+$background-color: #93A29B;
+$button-color: #DCBF85;
+$data-number: gray;
+$calc-background-color: rgb(48, 48, 48);
+$hover-color: rgb(78, 78, 78);
 
 //importing stylesheets
 @import 'components/layout';
