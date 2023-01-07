@@ -3,23 +3,34 @@ const operationButtons = document.querySelectorAll("[data-operation]");
 const equalButton = document.querySelector("[data-equals]");
 const stepBackButton = document.querySelector("[data-step-back]");
 const clearButton = document.querySelector("[data-clear]");
+const currentClearButton = document.querySelector("[data-current-clear]");
 const resultPanel = document.getElementById("result");
+const historyPanel = document.getElementById("history");
 let possibleOperands = ["+", "-"];
+let previousOperation = 0;
 
 numberButtons.forEach((button) => {
   button.addEventListener("click", () => {
+    if(previousOperation == 1){
+      resultPanel.innerHTML = "";
+    }
     resultPanel.innerHTML += button.innerHTML;
+    previousOperation = 0;
   });
 });
 
 operationButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    resultPanel.innerHTML += button.innerHTML;
+    historyPanel.innerHTML += resultPanel.innerHTML;
+    historyPanel.innerHTML += button.innerHTML;
+    previousOperation = 1;
   });
 });
 
 equalButton.addEventListener("click", () => {
-  let expression = resultPanel.innerHTML;
+  historyPanel.innerHTML += resultPanel.innerHTML;
+  historyPanel.innerHTML += "=";
+  let expression = historyPanel.innerHTML;
   let operands = findOperands(expression);
   let numbers = expression.split(/\+|\*|\-|\//);
 
@@ -42,7 +53,12 @@ stepBackButton.addEventListener("click", () => {
 });
 
 clearButton.addEventListener("click", () => {
-  resultPanel.innerHTML = " ";
+  resultPanel.innerHTML = "";
+  historyPanel.innerHTML = "";
+});
+
+currentClearButton.addEventListener("click", () => {
+  resultPanel.innerHTML = "";
 });
 
 function setResult(result) {
