@@ -5,42 +5,50 @@ const stepBackButton = document.querySelector("[data-step-back]");
 const clearButton = document.querySelector("[data-clear]");
 const currentClearButton = document.querySelector("[data-current-clear]");
 const resultPanel = document.getElementById("result");
-const historyPanel = document.getElementById("history");
+const operationPanel = document.getElementById("history");
 let possibleOperands = ["+", "-", "x", "/", "%"];
-let previousOperation = 0;
+let overwriteResultPanel = 0; // overwrite result panel after operator is pressed
+let nrOfEqualOperands = 0;
 
 numberButtons.forEach((button) => {
   button.addEventListener("click", () => {
     if (resultPanel.innerHTML == "0") {
       resultPanel.innerHTML = button.innerHTML;
     } else {
-      if (previousOperation == 1) {
+      if (overwriteResultPanel == 1) {
         resultPanel.innerHTML = "";
       }
       resultPanel.innerHTML += button.innerHTML;
-      previousOperation = 0;
+      overwriteResultPanel = 0;
     }
   });
 });
 
 operationButtons.forEach((button) => {
   button.addEventListener("click", () => {
+    deletePreviousEquationFromOperationPanel();
     if (resultPanel.innerHTML == "0") {
       resultPanel.innerHTML += button.innerHTML;
     } else {
-      historyPanel.innerHTML += resultPanel.innerHTML;
-      historyPanel.innerHTML += button.innerHTML;
-      previousOperation = 1;
+      operationPanel.innerHTML += resultPanel.innerHTML;
+      operationPanel.innerHTML += button.innerHTML;
+      overwriteResultPanel = 1;
     }
   });
 });
 
 equalButton.addEventListener("click", () => {
-  historyPanel.innerHTML += resultPanel.innerHTML;
-  historyPanel.innerHTML += "=";
-  let expression = historyPanel.innerHTML;
+  operationPanel.innerHTML += resultPanel.innerHTML;
+  operationPanel.innerHTML += "=";
+
+  let expression = operationPanel.innerHTML;
   let operands = findOperands(expression);
-  let numbers = expression.split(/\+|\%|\x|\-|\//);
+  let numbers = expression.split(/\+|\=|\%|\x|\-|\//);
+  numbers = numbers.filter(deleteEmptyValuesFromArray);
+  //insert 0 if number starts with - sign
+  if(numbers[0] == ""){
+    numbers[0] = '0';
+  }
 
   console.log(operands);
   console.log(numbers);
@@ -54,7 +62,7 @@ stepBackButton.addEventListener("click", () => {
 
 clearButton.addEventListener("click", () => {
   resultPanel.innerHTML = "0";
-  historyPanel.innerHTML = "";
+  operationPanel.innerHTML = "";
 });
 
 currentClearButton.addEventListener("click", () => {
@@ -66,7 +74,11 @@ function setResult(result) {
 }
 
 function findOperands(expression) {
+  //set starting sign for first number(plus-minus)
   let operands = ["+"];
+  if(expression[0] == "-"){
+    operands = [];
+  }
   for (const char in expression) {
     if (possibleOperands.includes(expression[char])) {
       operands.push(expression[char]);
@@ -92,4 +104,16 @@ function calculateResult(numbers, operands) {
     }
   }
   return sum;
+}
+
+function deletePreviousEquationFromOperationPanel(){
+  for (i = 0; i < operationPanel.innerHTML.length; i++) {
+    if (operationPanel.innerHTML[i] == "=") {
+      operationPanel.innerHTML = operationPanel.innerHTML.slice(i + 1);  
+    }
+  }
+}
+
+function deleteEmptyValuesFromArray(value ){
+  return (value != null && value !== false && value  !== "");
 }
