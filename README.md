@@ -6,7 +6,7 @@
 
 Calculator app made in HTML, SCSS and JavaScript for a web development course.
 
-Live preview: calculator.primoweb.ro
+<a href="https://www.calculator.primoweb.ro/">Live Preview</a>
 ## Features
 
 - Ability to add/decrease/mulitply/divide n numbers in any order and any combination
